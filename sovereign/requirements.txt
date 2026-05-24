@@ -7,8 +7,8 @@ cryptography
 vaderSentiment
 python-docx
 pyPDF2
-pillow
+Pillow
 openpyxl
 psutil
 numpy
-lxlm
+lxml
