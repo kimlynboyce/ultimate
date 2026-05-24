@@ -921,4 +921,4 @@ elif section == "🗂 Service Management":
                 fig=px.bar(df.sort_values("base_price",ascending=False),x="service_name",y="base_price",title="Base Price by Service",color="base_price",color_continuous_scale=["#4488ff","#ffaa00"])
                 fig.update_layout(height=280,paper_bgcolor="#0e0e0e",plot_bgcolor="#0e0e0e",font_color="#f0f0f0",coloraxis_showscale=False)
                 st.plotly_chart(fig,use_container_width=True)
-            else: st.info(
+            else: st.info()
