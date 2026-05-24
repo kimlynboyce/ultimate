@@ -1,0 +1,14 @@
+streamlit
+anthropic
+pandas
+plotly
+requests
+cryptography
+vaderSentiment
+python-docx
+pyPDF2
+pillow
+openpyxl
+psutil
+numpy
+lxlm
