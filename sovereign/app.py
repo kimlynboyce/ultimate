@@ -11,9 +11,9 @@ from cryptography.fernet import Fernet
 # CONFIG & TIME
 # ══════════════════════════════════════════════════════════════════════════════
 st.set_page_config(page_title="VECTOR OS", page_icon="⚡", layout="wide", initial_sidebar_state="expanded")
-now = (datetime.now(timezone.utc) - timedelta(hours=4)).replace(tzinfo=None)
+now      = (datetime.now(timezone.utc) - timedelta(hours=4)).replace(tzinfo=None)
 DATA_DIR = "vos_data"; os.makedirs(DATA_DIR, exist_ok=True)
-DB_PATH = os.path.join(DATA_DIR, "crm.db")
+DB_PATH  = os.path.join(DATA_DIR, "crm.db")
 def fp(name): return os.path.join(DATA_DIR, name)
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -24,19 +24,19 @@ st.markdown("""<style>
 
 /* ── AURORA BOREALIS THEME ── */
 :root {
-    --primary: #00ffcc; /* aurora teal */
-    --violet: #aa44ff; /* aurora violet */
-    --pink: #ff44aa; /* aurora pink */
-    --gold: #ffe066; /* aurora gold */
-    --danger: #ff4477; /* aurora red */
-    --bg: #020810; /* arctic night */
-    --bg2: #05101e; /* card bg */
-    --bg3: #071628; /* sidebar */
-    --border: #0c2340; /* border */
-    --border2: #112d50; /* card border */
-    --text: #e0f4ff; /* cool white */
-    --dim: #2a5070; /* dim text */
-    --dim2: #163050; /* very dim */
+    --primary:   #00ffcc;   /* aurora teal   */
+    --violet:    #aa44ff;   /* aurora violet */
+    --pink:      #ff44aa;   /* aurora pink   */
+    --gold:      #ffe066;   /* aurora gold   */
+    --danger:    #ff4477;   /* aurora red    */
+    --bg:        #020810;   /* arctic night  */
+    --bg2:       #05101e;   /* card bg       */
+    --bg3:       #071628;   /* sidebar       */
+    --border:    #0c2340;   /* border        */
+    --border2:   #112d50;   /* card border   */
+    --text:      #e0f4ff;   /* cool white    */
+    --dim:       #2a5070;   /* dim text      */
+    --dim2:      #163050;   /* very dim      */
 }
 
 *,*::before,*::after{box-sizing:border-box;}
@@ -245,6 +245,154 @@ div[data-baseweb="select"] *{color:var(--text)!important;background:var(--bg2)!i
     margin-top:3rem;text-transform:uppercase;
     background:linear-gradient(180deg,transparent,rgba(0,255,204,0.02));
 }
+
+/* ══════════════════════════════════════════
+   AURORA GLOW & ANIMATION EFFECTS
+══════════════════════════════════════════ */
+
+/* Floating aurora orbs — fixed behind everything */
+body::before {
+    content:'';
+    position:fixed;
+    width:600px; height:600px;
+    border-radius:50%;
+    background:linear-gradient(45deg,#00ffcc,#aa44ff);
+    filter:blur(120px);
+    opacity:0.07;
+    top:-200px; left:-150px;
+    pointer-events:none;
+    z-index:0;
+    animation:orb-drift-a 20s ease-in-out infinite;
+}
+body::after {
+    content:'';
+    position:fixed;
+    width:500px; height:500px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ff44aa,#aa44ff);
+    filter:blur(100px);
+    opacity:0.07;
+    bottom:-150px; right:-100px;
+    pointer-events:none;
+    z-index:0;
+    animation:orb-drift-b 25s ease-in-out infinite;
+}
+@keyframes orb-drift-a {
+    0%,100% { transform:translate(0px,0px) scale(1); }
+    33%      { transform:translate(60px,40px) scale(1.1); }
+    66%      { transform:translate(-40px,60px) scale(0.95); }
+}
+@keyframes orb-drift-b {
+    0%,100% { transform:translate(0px,0px) scale(1); }
+    33%      { transform:translate(-50px,-30px) scale(1.05); }
+    66%      { transform:translate(40px,-50px) scale(0.9); }
+}
+
+/* Glowing gradient line under header */
+.glow-line {
+    height:1px;
+    background:linear-gradient(90deg,transparent,#00ffcc,#aa44ff,#ff44aa,transparent);
+    margin-bottom:1.5rem;
+    animation:line-pulse 4s ease-in-out infinite;
+}
+@keyframes line-pulse {
+    0%,100% { opacity:0.3; }
+    50%      { opacity:1; box-shadow:0 0 12px rgba(0,255,204,0.5); }
+}
+
+/* Wordmark slow glow pulse */
+.vos-wordmark { animation:wordmark-glow 6s ease-in-out infinite; }
+@keyframes wordmark-glow {
+    0%,100% { filter:drop-shadow(0 0 4px rgba(0,255,204,0.0)); }
+    50%      { filter:drop-shadow(0 0 24px rgba(0,255,204,0.45)); }
+}
+
+/* Stat block — glow on hover */
+.stat-block {
+    transition:all 0.3s ease;
+}
+.stat-block:hover {
+    border-top-color:var(--violet);
+    box-shadow:0 0 30px rgba(0,255,204,0.08),inset 0 0 20px rgba(0,255,204,0.03);
+}
+
+/* Card glow on hover */
+.v-card { transition:all 0.25s ease; }
+.v-card-a:hover { box-shadow:0 0 20px rgba(0,255,204,0.1); }
+.v-card-g:hover { box-shadow:0 0 20px rgba(0,255,204,0.12); }
+.v-card-b:hover { box-shadow:0 0 20px rgba(170,68,255,0.12); }
+.v-card-r:hover { box-shadow:0 0 20px rgba(255,68,119,0.12); }
+
+/* Progress bar glow pulse */
+.v-bar-fill {
+    box-shadow:0 0 8px rgba(0,255,204,0.5);
+    animation:bar-glow 3s ease-in-out infinite;
+}
+@keyframes bar-glow {
+    0%,100% { box-shadow:0 0 6px rgba(0,255,204,0.3); }
+    50%      { box-shadow:0 0 18px rgba(170,68,255,0.6); }
+}
+
+/* Stat values fade up on load */
+.stat-val { animation:fade-up 0.6s ease both; }
+@keyframes fade-up {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+/* Button shimmer sweep on hover */
+.stButton>button { overflow:hidden; position:relative; }
+.stButton>button:hover {
+    box-shadow:0 0 25px rgba(0,255,204,0.35)!important;
+}
+
+/* News card hover glow */
+.news-card { transition:all 0.2s ease; }
+.news-card:hover {
+    border-color:var(--primary)!important;
+    box-shadow:0 0 15px rgba(0,255,204,0.08);
+    transform:translateX(3px);
+}
+
+/* Thought block — subtle violet glow */
+.thought-block {
+    transition:all 0.25s ease;
+}
+.thought-block:hover {
+    box-shadow:0 0 20px rgba(170,68,255,0.12);
+    border-top-color:var(--pink);
+}
+
+/* Alert strip — scan line animation */
+.alert-strip {
+    position:relative;
+    overflow:hidden;
+}
+.alert-strip::after {
+    content:'';
+    position:absolute;
+    top:0; left:-100%;
+    width:60%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(0,255,204,0.08),transparent);
+    animation:scan-sweep 4s linear infinite;
+}
+@keyframes scan-sweep {
+    0%   { left:-60%; }
+    100% { left:160%; }
+}
+
+/* Glowing scrollbar */
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb {
+    background:linear-gradient(180deg,#00ffcc,#aa44ff,#ff44aa);
+    border-radius:2px;
+    box-shadow:0 0 6px rgba(0,255,204,0.4);
+}
+
+/* Text selection */
+::selection { background:rgba(0,255,204,0.15); color:#00ffcc; }
+
 </style>""", unsafe_allow_html=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -273,7 +421,7 @@ def ai(prompt, system="", max_tokens=1500):
 
 def _fkey(pw): return base64.urlsafe_b64encode(hashlib.sha256(pw.encode()).digest())
 def enc(text, pw): return Fernet(_fkey(pw)).encrypt(text.encode()).decode()
-def dec(ct, pw): return Fernet(_fkey(pw)).decrypt(ct.encode()).decode()
+def dec(ct, pw):   return Fernet(_fkey(pw)).decrypt(ct.encode()).decode()
 
 def gen_pwd(n=24, sym=True):
     alpha = string.ascii_letters + string.digits + ("!@#$%^&*()-_=+[]{}|;:,.<>?" if sym else "")
@@ -303,8 +451,8 @@ def get_news(url, count=6):
         for item in root.findall('.//item')[:count]:
             t = item.find('title'); l = item.find('link'); p = item.find('pubDate')
             items.append({"title": t.text if t is not None else "No title",
-                          "link": l.text if l is not None else "#",
-                          "pub": p.text[:22] if p is not None else ""})
+                          "link":  l.text if l is not None else "#",
+                          "pub":   p.text[:22] if p is not None else ""})
         return items
     except: return []
 
@@ -440,7 +588,7 @@ BOT_CONV = {
     "thanks":["You're welcome! Anything else?"],
 }
 CATEGORIES = ["Produce","Grocery/Dry Goods","Meat & Fish","Dairy","Beverages","Household","Other"]
-BILL_TYPES = ["TNTEC (Electricity)","WASA (Water)","Internet","Mobile Phone","Cable TV","Rent / Mortgage","Gas","Insurance","Other"]
+BILL_TYPES  = ["TNTEC (Electricity)","WASA (Water)","Internet","Mobile Phone","Cable TV","Rent / Mortgage","Gas","Insurance","Other"]
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TRANSPARENCY ENGINE DATA
@@ -492,9 +640,9 @@ def decode_input(text):
             raw = re.sub(re.escape(phrase),"",raw,flags=re.IGNORECASE)
             masks.append((phrase, label))
     raw = re.sub(r"\s{2,}"," ",raw).strip().lstrip(",. ")
-    words = re.findall(r"\b\w+\b", raw.lower())
+    words   = re.findall(r"\b\w+\b", raw.lower())
     actions = list(dict.fromkeys(w for w in words if w in ACTION_TOKENS))
-    lower = text.lower()
+    lower   = text.lower()
     urgency = "LOW"
     if any(s in lower for s in URGENCY_H): urgency = "HIGH"
     elif any(s in lower for s in URGENCY_M): urgency = "MEDIUM"
@@ -628,7 +776,7 @@ urgent = [x for x in alerts if x['level']=='critical']
 # ══════════════════════════════════════════════════════════════════════════════
 hour = now.hour
 greet = "Good Morning" if hour<12 else ("Good Afternoon" if hour<17 else "Good Evening")
-dmsg = {"Monday":"New week.","Tuesday":"Keep going.","Wednesday":"Halfway.","Thursday":"Push through.",
+dmsg  = {"Monday":"New week.","Tuesday":"Keep going.","Wednesday":"Halfway.","Thursday":"Push through.",
           "Friday":"Finish strong.","Saturday":"Rest well.","Sunday":"Recharge."}.get(now.strftime("%A"),"Stay focused.")
 st.markdown(f"""
 <div class="vos-header">
@@ -645,7 +793,6 @@ elif alerts:
     st.markdown(f'<div class="alert-strip">{alerts[0]["icon"]} {alerts[0]["msg"].upper()}<span>{len(alerts)} ALERT(S)</span></div>',unsafe_allow_html=True)
 else:
     st.markdown('<div class="alert-strip clear">✓ ALL SYSTEMS CLEAR<span>● NOMINAL</span></div>',unsafe_allow_html=True)
-
 # ══════════════════════════════════════════════════════════════════════════════
 # SIDEBAR
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1279,7 +1426,7 @@ elif section == "⚡ Agentic AI Platform":
                 cron=cron_map.get(t_freq,"0 9 * * *")
                 if "Linux" in t_os: sc=f"# crontab -e\n{cron} {t_cmd} >> /var/log/{t_name}.log 2>&1"
                 elif "Windows" in t_os: sc=f'$A=New-ScheduledTaskAction -Execute "powershell" -Argument "{t_cmd}"\n$T=New-ScheduledTaskTrigger -Daily -At 9am\nRegister-ScheduledTask -TaskName "{t_name}" -Action $A -Trigger $T -Force'
-                else: sc=f"import schedule, subprocess, time\ndef task():\n subprocess.run('{t_cmd}',shell=True)\nschedule.every().day.at('09:00').do(task)\nwhile True:\n schedule.run_pending()\n time.sleep(60)"
+                else: sc=f"import schedule, subprocess, time\ndef task():\n    subprocess.run('{t_cmd}',shell=True)\nschedule.every().day.at('09:00').do(task)\nwhile True:\n    schedule.run_pending()\n    time.sleep(60)"
                 st.markdown(f'<div class="cb">{sc}</div>',unsafe_allow_html=True)
                 st.download_button("Download",sc,file_name=f"{t_name}_schedule.txt",key="dl_sched")
 
